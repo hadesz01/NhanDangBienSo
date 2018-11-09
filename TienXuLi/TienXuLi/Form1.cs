@@ -179,7 +179,7 @@ namespace TienXuLi
                     location = rect;
                     
                 }
-                CvInvoke.Rectangle(_src, rect, new MCvScalar(0, 0, 255), 3);
+                CvInvoke.Rectangle(_src, rect, new MCvScalar(0, 0, 255), 1);
                 
             }
          
@@ -190,14 +190,14 @@ namespace TienXuLi
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string path = "d:\\Untitled.png";
-            Image<Bgr, byte> iii = new Image<Bgr, byte>(path);
-            Image<Gray, byte> ii = iii.Convert<Gray, byte>();
-            //Image<Gray, byte> ii = temp1;
-            TesseractEngine engine = new TesseractEngine("./tessdata", "eng");
-            Page pag = engine.Process(ii.Bitmap, PageSegMode.Auto);
-            string text = pag.GetText();
-            MessageBox.Show(text);
+            //string path = "d:\\Untitled.png";
+            //Image<Bgr, byte> iii = new Image<Bgr, byte>(path);
+            //Image<Gray, byte> ii = iii.Convert<Gray, byte>();
+            ////Image<Gray, byte> ii = temp1;
+            //TesseractEngine engine = new TesseractEngine("./tessdata", "eng");
+            //Page pag = engine.Process(ii.Bitmap, PageSegMode.Auto);
+            //string text = pag.GetText();
+            //MessageBox.Show(text);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -238,8 +238,12 @@ namespace TienXuLi
             {
                 int key = int.Parse(it.Key.ToString());
                 Rectangle rect = CvInvoke.BoundingRectangle(vect[key]);
-                CvInvoke.Rectangle(temp3, rect, new MCvScalar(255, 0, 0), 1);               
-                CvInvoke.Rectangle(color1, rect, new MCvScalar(0, 0, 255), 1);
+                //CvInvoke.Rectangle(temp3, rect, new MCvScalar(255, 0, 0), 1);    
+                if (rect.Height/rect.Width>0.3)
+                {
+                    CvInvoke.Rectangle(color1, rect, new MCvScalar(0, 255, 0), 1);
+                }
+                
             }
             CvInvoke.cvResetImageROI(src);
             imageBox2.Image = color1;
